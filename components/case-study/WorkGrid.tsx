@@ -1,6 +1,8 @@
 import type { TileRow } from "@/content/types";
 import { Container } from "@/components/ui/Container";
 import { MediaSlot } from "@/components/ui/MediaSlot";
+import { FadeUp } from "@/components/motion/FadeUp";
+import { RevealLines } from "@/components/motion/RevealLines";
 
 type WorkGridProps = {
   id: string;
@@ -23,13 +25,15 @@ export function WorkGrid({ id, title, intro, rows, tone = "ink" }: WorkGridProps
     <section aria-labelledby={id} className={`${surface} py-16 md:py-24`}>
       <Container className="flex flex-col gap-8 md:gap-10">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 id={id} className="type-display text-[clamp(40px,5vw,56px)] leading-[0.95]">
-            {title}
-          </h2>
+          <RevealLines>
+            <h2 id={id} className="type-display text-[clamp(40px,5vw,56px)] leading-[0.95]">
+              {title}
+            </h2>
+          </RevealLines>
           {intro ? <p className="max-w-[360px] text-[15px] leading-normal text-muted">{intro}</p> : null}
         </div>
         {rows.map((row, r) => (
-          <ul key={r} className={`grid gap-4 ${cols[row.tiles.length] ?? "sm:grid-cols-2"}`}>
+          <FadeUp as="ul" stagger key={r} className={`grid gap-4 ${cols[row.tiles.length] ?? "sm:grid-cols-2"}`}>
             {row.tiles.map((tile) => (
               <li key={tile.placeholder}>
                 <MediaSlot
@@ -42,7 +46,7 @@ export function WorkGrid({ id, title, intro, rows, tone = "ink" }: WorkGridProps
                 />
               </li>
             ))}
-          </ul>
+          </FadeUp>
         ))}
       </Container>
     </section>

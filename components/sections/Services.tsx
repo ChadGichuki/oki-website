@@ -1,5 +1,7 @@
 import { site } from "@/content/site";
 import { Section } from "@/components/ui/Section";
+import { FadeUp } from "@/components/motion/FadeUp";
+import { RevealLines } from "@/components/motion/RevealLines";
 
 export function Services() {
   const { title, intro, items, extras } = site.services;
@@ -7,12 +9,14 @@ export function Services() {
     <Section id="services" tone="sand" labelledBy="services-title">
       <div className="grid gap-16 lg:grid-cols-[1fr_2fr]">
         <div className="flex flex-col gap-5">
-          <h2 id="services-title" className="type-display text-section-title">
-            {title}
-          </h2>
+          <RevealLines>
+            <h2 id="services-title" className="type-display text-section-title">
+              {title}
+            </h2>
+          </RevealLines>
           <p className="max-w-[360px] text-body text-muted">{intro}</p>
         </div>
-        <ul className="border-t border-ink">
+        <FadeUp as="ul" stagger className="border-t border-ink">
           {items.map((service) => (
             <li
               key={service.name}
@@ -29,7 +33,7 @@ export function Services() {
               <span key={extra}>{extra}</span>
             ))}
           </li>
-        </ul>
+        </FadeUp>
       </div>
     </Section>
   );

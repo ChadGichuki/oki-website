@@ -1,16 +1,20 @@
 import { site } from "@/content/site";
 import type { LeadersCaseStudy } from "@/content/types";
 import { Container } from "@/components/ui/Container";
+import { FadeUp } from "@/components/motion/FadeUp";
+import { RevealLines } from "@/components/motion/RevealLines";
 
 export function LeaderCards({ leaders }: { leaders: LeadersCaseStudy["leaders"] }) {
   const rows = site.caseStudy.leaderRows;
   return (
     <section aria-labelledby="leaders-title" className="bg-paper pb-section-mobile pt-6 md:pb-section">
       <Container className="flex flex-col gap-12">
-        <h2 id="leaders-title" className="type-display text-section-title">
-          {leaders.title}
-        </h2>
-        <ol className="grid gap-6 lg:grid-cols-3">
+        <RevealLines>
+          <h2 id="leaders-title" className="type-display text-section-title">
+            {leaders.title}
+          </h2>
+        </RevealLines>
+        <FadeUp as="ol" stagger className="grid gap-6 lg:grid-cols-3">
           {leaders.items.map((leader, i) => (
             <li key={leader.role}>
               <article className="flex h-full flex-col gap-5 border border-line bg-white p-6 md:p-8">
@@ -40,7 +44,7 @@ export function LeaderCards({ leaders }: { leaders: LeadersCaseStudy["leaders"] 
               </article>
             </li>
           ))}
-        </ol>
+        </FadeUp>
       </Container>
     </section>
   );
