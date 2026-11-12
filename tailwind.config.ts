@@ -27,6 +27,8 @@ const config: Config = {
           soft: "#8A8A8A",
         },
         card: "#1C1C1C",
+        // Not in CLAUDE.md: thin rules on black, taken from the design canvas.
+        "line-dark": "#262626",
       },
       fontFamily: {
         display: ["var(--font-archivo)", "Arial Narrow", "sans-serif"],

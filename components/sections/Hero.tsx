@@ -1,21 +1,9 @@
 import { preload } from "react-dom";
 import { site } from "@/content/site";
-import type { HeadlineLine } from "@/content/types";
 import { Button } from "@/components/ui/Button";
+import { Highlighted } from "@/components/ui/Highlighted";
 import { Container } from "@/components/ui/Container";
 import { HeroStage } from "./HeroStage";
-
-function Line({ text, highlight }: HeadlineLine) {
-  if (!highlight || !text.includes(highlight)) return <>{text}</>;
-  const i = text.indexOf(highlight);
-  return (
-    <>
-      {text.slice(0, i)}
-      <span className="text-brand">{highlight}</span>
-      {text.slice(i + highlight.length)}
-    </>
-  );
-}
 
 export function Hero() {
   const { hero } = site;
@@ -29,11 +17,15 @@ export function Hero() {
       poster={hero.video.poster}
       labelledBy="hero-title"
     >
-      <Container className="flex h-full flex-col justify-end pb-16 pt-24 md:pb-24">
-        <h1 id="hero-title" className="type-display text-hero">
+      <Container className="flex min-h-svh flex-col justify-end pb-16 pt-24 md:pb-24">
+        <p data-reveal-line className="hero-line type-label mb-10 flex items-center gap-2.5 text-label-lg text-muted-dark">
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-brand" />
+          {hero.eyebrow}
+        </p>
+        <h1 id="hero-title" className="type-display text-[clamp(40px,13.5vw,64px)] leading-[0.88] tracking-[-0.01em] sm:text-hero">
           {hero.headline.map((line) => (
             <span key={line.text} data-reveal-line className="hero-line block">
-              <Line {...line} />
+              <Highlighted {...line} />
             </span>
           ))}
         </h1>

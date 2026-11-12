@@ -54,9 +54,11 @@ export interface Stat {
 
 export interface Quote {
   text: string;
-  name: string;
+  /** Job title / descriptor shown as the attribution, e.g. "Head of Service Delivery, Tier 1 bank". */
   role: string;
-  company: string;
+  /** Optional: leader quotes are attributed by job title only. */
+  name?: string;
+  company?: string;
   portrait?: ImageMedia;
 }
 
@@ -99,6 +101,7 @@ export interface HeadlineLine {
 }
 
 export interface HeroContent {
+  eyebrow: string;
   /** Each entry is one revealed line of the h1. */
   headline: HeadlineLine[];
   subline: string;
@@ -106,4 +109,60 @@ export interface HeroContent {
   secondaryCta: { label: string; href: string };
   /** 16:9 `sources` for desktop, 9:16 `mobileSources` for phones. */
   video: VideoMedia & { mobileSources: VideoSource[] };
+}
+
+export interface Link {
+  label: string;
+  href: string;
+}
+
+/** Text with an optional substring rendered in brand orange. */
+export interface HighlightText {
+  text: string;
+  highlight?: string;
+}
+
+export interface WorkCard {
+  slug: CaseStudySlug;
+  /** Small uppercase line above the title. */
+  eyebrow: string;
+  title: string;
+  /** Extra detail, shown on the featured card only. */
+  meta?: string;
+  media?: MediaItem;
+  /** 6s muted clip for desktop hover (motion pass). */
+  hoverClip?: VideoMedia;
+  /** Shown in the media slot until real client media lands. */
+  placeholder: string;
+  placeholderTone?: "card" | "brand";
+}
+
+export interface Lane {
+  eyebrow: string;
+  title: string;
+  body: string;
+}
+
+export interface Step {
+  title: string;
+  body: string;
+}
+
+export interface Service {
+  name: string;
+  detail: string;
+}
+
+export interface Feature {
+  title: string;
+  body: string;
+}
+
+export interface FormField {
+  name: string;
+  label: string;
+}
+
+export interface SelectField extends FormField {
+  options: string[];
 }
