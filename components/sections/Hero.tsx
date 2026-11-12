@@ -25,7 +25,7 @@ export function Hero() {
         <h1 id="hero-title" className="type-display text-[clamp(40px,13.5vw,64px)] leading-[0.88] tracking-[-0.01em] sm:text-hero">
           {hero.headline.map((line) => (
             <span key={line.text} data-reveal-line className="hero-line block">
-              <Highlighted {...line} />
+              <Highlighted {...line} />{" "}
             </span>
           ))}
         </h1>

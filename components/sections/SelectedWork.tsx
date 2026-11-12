@@ -13,7 +13,7 @@ function Card({ card, featured = false }: { card: WorkCard; featured?: boolean }
       <MediaSlot
         media={card.media}
         placeholder={card.placeholder}
-        tone={card.placeholderTone}
+        tone={card.tone}
         aspect={featured ? "aspect-[4/3] md:aspect-[2/1]" : "aspect-[4/5]"}
         sizes={featured ? "(min-width: 1280px) 1232px, 100vw" : "(min-width: 768px) 50vw, 100vw"}
         className="rounded"

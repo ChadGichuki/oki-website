@@ -7,7 +7,38 @@ import { Logo } from "./Logo";
 const navLinkClass =
   "inline-flex min-h-btn-md items-center text-[15px] font-medium text-ink underline-offset-4 hover:underline";
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  /** "full": main nav (homepage). "case": back link + CTA (case studies, per canvas). */
+  variant?: "full" | "case";
+};
+
+function CaseHeaderActions() {
+  return (
+    <div className="flex items-center gap-4 sm:gap-7">
+      <Link href={site.caseStudy.backLink.href} className={navLinkClass}>
+        {site.caseStudy.backLink.label}
+      </Link>
+      <Button href={site.cta.href} size="md">
+        {site.cta.label}
+      </Button>
+    </div>
+  );
+}
+
+export function SiteHeader({ variant = "full" }: SiteHeaderProps) {
+  if (variant === "case") {
+    return (
+      <header className="sticky top-0 z-50 border-b border-line bg-paper">
+        <Container className="flex h-[72px] items-center justify-between gap-4">
+          <Link href="/" aria-label={site.logoLabel} className="inline-flex min-h-btn-md shrink-0 items-center">
+            <Logo priority />
+          </Link>
+          <CaseHeaderActions />
+        </Container>
+      </header>
+    );
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper">
       <Container className="flex h-[72px] items-center justify-between gap-6">
