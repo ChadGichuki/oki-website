@@ -1,30 +1,15 @@
-import Script from "next/script";
+import { site } from "@/content/site";
 import { isPreviewDeployment } from "@/lib/seo";
+import { UmamiScript } from "./UmamiScript";
 
 /**
- * Plausible: cookie-free, no consent banner needed. Loads only in production with
- * PLAUSIBLE_DOMAIN set. The tagged-events build tracks clicks on links carrying
- * `plausible-event-name=…` classes (see lib/analytics.ts → eventClass).
+ * Umami Cloud: cookie-free, so no consent banner. Loads only in production with
+ * UMAMI_WEBSITE_ID set (read at build time). Clicks on elements carrying
+ * data-umami-event attributes are tracked by the script (see lib/analytics.ts → eventAttrs).
  */
-const domain = () => (isPreviewDeployment ? undefined : process.env.PLAUSIBLE_DOMAIN);
-
-/**
- * Inline in <head>: queues events fired before the script arrives (e.g. case_study_view
- * fires during hydration). The script replays the queue when it loads.
- */
-export function AnalyticsQueue() {
-  if (!domain()) return null;
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: "window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}",
-      }}
-    />
-  );
-}
-
 export function Analytics() {
-  const d = domain();
-  if (!d) return null;
-  return <Script src="https://plausible.io/js/script.tagged-events.js" data-domain={d} strategy="afterInteractive" />;
+  const websiteId = process.env.UMAMI_WEBSITE_ID;
+  if (!websiteId || isPreviewDeployment) return null;
+  const host = new URL(site.url).hostname;
+  return <UmamiScript websiteId={websiteId} domains={`${host},www.${host}`} />;
 }

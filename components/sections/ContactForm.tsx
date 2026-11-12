@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { submitContact } from "@/app/actions/contact";
 import type { site } from "@/content/site";
-import { EVENTS, track } from "@/lib/analytics";
+import { EVENTS, eventAttrs, track } from "@/lib/analytics";
 import { STARTED_AT_FIELD, initialContactState, type ContactFieldName } from "@/lib/contact-state";
 
 type FormContent = (typeof site)["contact"]["form"];
@@ -190,8 +190,7 @@ function ContactFormInner({ form, onReset }: { form: FormContent; onReset: () =>
           href={form.whatsapp.href}
           target="_blank"
           rel="noopener noreferrer"
-          // Tracked here, not with a tagged class: Plausible ignores tagged clicks inside a <form>.
-          onClick={() => track(EVENTS.whatsappClick, { location: "form" })}
+          {...eventAttrs(EVENTS.whatsappClick, { location: "form" })}
           className="inline-flex min-h-btn-lg items-center justify-center rounded-full border border-paper px-8 font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
         >
           {form.whatsapp.label}

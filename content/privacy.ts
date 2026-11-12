@@ -15,7 +15,7 @@ export const privacy = {
       body: [
         "When you send the contact form we receive your name, email address, company (if you give it), the service and budget you pick, and your message.",
         "When you message or call us on WhatsApp, WhatsApp processes that conversation under its own terms, and we receive your phone number and what you send us.",
-        "We measure visits with Plausible Analytics, which does not use cookies and does not collect personal data. It counts page views and events such as form submissions in aggregate.",
+        "We measure visits with Umami Analytics, which does not use cookies and does not store your IP address or other personal data. It counts page views and events such as form submissions in aggregate.",
         "To protect the form from abuse, our server briefly keeps your IP address in memory to limit how many messages one connection can send. It is not stored in a database.",
       ],
     },
@@ -28,7 +28,7 @@ export const privacy = {
     {
       title: "Who processes it for us",
       body: [
-        "Vercel hosts the website. Resend delivers contact form messages to our inbox. Plausible provides cookie-free analytics. These providers may process data outside Kenya; we only use providers that protect it with appropriate safeguards.",
+        "Vercel hosts the website. Resend delivers contact form messages to our inbox. Umami provides cookie-free analytics. These providers may process data outside Kenya; we only use providers that protect it with appropriate safeguards.",
       ],
     },
     {
