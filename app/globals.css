@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper font-sans text-body text-ink antialiased;
+  }
+
+  /* Visible focus ring everywhere; dark surfaces override via .on-dark */
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-ink;
+  }
+
+  .on-dark :focus-visible {
+    @apply outline-brand;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Display: Archivo 900, 75% width, uppercase */
+  .type-display {
+    @apply font-display uppercase;
+    font-weight: 900;
+    font-stretch: 75%;
+    font-variation-settings: "wdth" 75;
+    line-height: 0.9;
+  }
+
+  /* Labels: 12–14px uppercase, tracking 0.12–0.14em */
+  .type-label {
+    @apply text-label font-medium uppercase;
+  }
+}
