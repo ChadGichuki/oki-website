@@ -7,12 +7,16 @@ import type { VideoSource } from "@/content/types";
 const REVEAL_AT_SECONDS = 5;
 /** If playback hasn't started by now, show the text straight away. */
 const START_TIMEOUT_MS = 1500;
+/**
+ * Runs while the HTML parses, before React hydrates (which can take seconds on a slow
+ * phone). If the video isn't playing 1.5s after navigation, or Save-Data is on, it marks
+ * <html> with .hero-early and CSS shows the headline at once. HeroStage honours the flag.
+ */
+const EARLY_REVEAL_SCRIPT = `(function(){var v=document.currentScript.previousElementSibling,d=document.documentElement,c=navigator.connection;function s(){d.classList.add("hero-early")}if(c&&c.saveData)return s();setTimeout(function(){if(!v||v.paused||v.currentTime===0)s()},Math.max(0,${START_TIMEOUT_MS}-performance.now()))})()`;
 /** Safety net if the video starts and then stalls before 5s. */
 const MAX_WAIT_MS = 9000;
 /** Phones in portrait get the 9:16 cut. */
 const MOBILE_MEDIA = "(max-width: 767px) and (orientation: portrait)";
-/** Motion spec 1: cubic-bezier(.2,.7,.1,1). */
-const REVEAL_EASE_PATH = "M0,0 C0.2,0.7 0.1,1 1,1";
 
 type HeroStageProps = {
   sources: VideoSource[];
@@ -38,66 +42,30 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     const video = videoRef.current;
     if (!root || !video) return;
 
-    const lines = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal-line]"));
+    // Stagger index for the CSS transition delay (globals.css → .hero-line).
+    root.querySelectorAll<HTMLElement>("[data-reveal-line]").forEach((line, i) => {
+      line.style.setProperty("--line", String(i));
+    });
     // JS now owns visibility: cancel the CSS failsafe.
     root.classList.add("hero-armed");
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const saveData = (navigator as NavigatorWithConnection).connection?.saveData === true;
 
-    let revealed = false;
-    let disposed = false;
     let started = !video.paused && video.currentTime > 0;
-    let killTween: (() => void) | undefined;
     const timers: number[] = [];
 
-    const setVisible = () => {
-      for (const line of lines) {
-        line.style.opacity = "1";
-        line.style.transform = "none";
-      }
-    };
-
     if (reducedMotion) {
-      // No autoplaying motion: hold the first frame/poster and show the text.
-      // Must not touch detach(): its handlers are declared further down (TDZ).
+      // No autoplaying motion: hold the first frame/poster. The CSS only hides the
+      // lines under prefers-reduced-motion: no-preference, so the text is already visible.
       video.pause();
-      setVisible();
       return () => root.classList.remove("hero-armed");
     }
 
-    const showNow = () => {
-      revealed = true;
-      detach();
-      setVisible();
-    };
-
-    // Start loading GSAP now so the reveal isn't waiting on the network at 5s.
-    const gsapReady = Promise.all([import("gsap"), import("gsap/CustomEase")]);
-
+    // Motion spec 1 runs as a CSS transition, so the reveal never waits on a JS download.
     const reveal = () => {
-      if (revealed) return;
-      revealed = true;
       detach();
-      gsapReady
-        .then(([{ gsap }, { CustomEase }]) => {
-          if (disposed) return;
-          gsap.registerPlugin(CustomEase);
-          const tween = gsap.fromTo(
-            lines,
-            { yPercent: 40, opacity: 0 },
-            {
-              yPercent: 0,
-              opacity: 1,
-              duration: 0.9,
-              stagger: 0.12,
-              ease: CustomEase.create("oki-reveal", REVEAL_EASE_PATH),
-              clearProps: "transform",
-            },
-          );
-          killTween = () => tween.kill();
-        })
-        .catch(showNow);
+      root.classList.add("hero-revealed");
     };
 
     const onPlaying = () => {
@@ -117,18 +85,21 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
       timers.forEach(window.clearTimeout);
     }
 
-    if (saveData) {
+    if (saveData || document.documentElement.classList.contains("hero-early")) {
       reveal();
     } else {
       video.addEventListener("playing", onPlaying);
       video.addEventListener("timeupdate", onTimeUpdate);
       video.addEventListener("error", reveal);
       root.addEventListener("focusin", onFocusIn);
+      // Deadlines count from navigation start, not from hydration: on a slow phone React
+      // can mount seconds in, and the visitor has been waiting since the page appeared.
+      const elapsed = performance.now();
       timers.push(
         window.setTimeout(() => {
           if (!started) reveal();
-        }, START_TIMEOUT_MS),
-        window.setTimeout(reveal, MAX_WAIT_MS),
+        }, Math.max(0, START_TIMEOUT_MS - elapsed)),
+        window.setTimeout(reveal, Math.max(0, MAX_WAIT_MS - elapsed)),
       );
       // Belt and braces for browsers that ignore the attribute after hydration.
       video.muted = true;
@@ -137,10 +108,8 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     }
 
     return () => {
-      disposed = true;
       detach();
-      killTween?.();
-      root.classList.remove("hero-armed");
+      root.classList.remove("hero-armed", "hero-revealed");
     };
   }, []);
 
@@ -169,6 +138,7 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
           <source key={s.src} src={s.src} type={s.type} />
         ))}
       </video>
+      <script dangerouslySetInnerHTML={{ __html: EARLY_REVEAL_SCRIPT }} />
       {/* Flat overlay, no gradient */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[rgba(0,0,0,0.45)]" />
       {children}

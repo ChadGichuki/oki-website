@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { privacy } from "@/content/privacy";
 import { Container } from "@/components/ui/Container";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: privacy.seo.title,
-  description: privacy.seo.description,
-  alternates: { canonical: "/privacy" },
-};
+export const metadata: Metadata = pageMetadata({ ...privacy.seo, path: "/privacy" });
 
 export default function PrivacyPage() {
   return (

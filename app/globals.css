@@ -50,24 +50,44 @@
 }
 
 /*
- * Hero reveal. Lines start hidden only when JS is present (html.js, set inline
- * in <head>). If the hero script never runs, the failsafe animation shows them
- * after 3s. Once HeroStage mounts it adds .hero-armed and takes over.
+ * Hero reveal (motion spec 1). Lines start hidden only when JS is present (html.js,
+ * set inline in <head>) and motion is welcome. If the hero script never runs, the
+ * failsafe animation shows them after 3s. Once HeroStage mounts it adds .hero-armed
+ * (cancels the failsafe) and later .hero-revealed, which runs the staggered transition.
  */
 @keyframes hero-failsafe {
   to {
     opacity: 1;
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .js .hero-line {
     opacity: 0;
+    transform: translateY(40%);
     animation: hero-failsafe 0.01s linear 3s forwards;
   }
 
   .js .hero-armed .hero-line {
     animation: none;
+    transition:
+      opacity 0.9s cubic-bezier(0.2, 0.7, 0.1, 1),
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
+    transition-delay: calc(var(--line, 0) * 120ms);
+  }
+
+  .js .hero-revealed .hero-line {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Set by the inline script in HeroStage before hydration: show at once. */
+  .js.hero-early .hero-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
   }
 }
 
