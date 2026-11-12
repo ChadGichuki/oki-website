@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
-import { Analytics, AnalyticsQueue } from "@/components/Analytics";
+import { Analytics } from "@/components/Analytics";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SiteFooter } from "@/components/SiteFooter";
 import { site } from "@/content/site";
@@ -48,7 +48,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         {/* Flags JS support before first paint so motion can hide content without a flash. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-        <AnalyticsQueue />
       </head>
       <body className="flex min-h-svh flex-col">
         <a

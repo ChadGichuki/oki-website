@@ -6,7 +6,7 @@ If the canvas and this file disagree, ask before building.
 
 ## Stack
 Next.js App Router, TypeScript (strict), Tailwind, GSAP + ScrollTrigger, Lenis,
-Resend (contact form), Plausible (analytics), Vercel (hosting). pnpm.
+Resend (contact form), Umami Cloud (analytics, cookie-free), Vercel (hosting). pnpm.
 
 ## Rules
 - All copy lives in /content (site.ts, case-studies/*.ts). Never hard-code copy in components.
@@ -15,7 +15,7 @@ Resend (contact form), Plausible (analytics), Vercel (hosting). pnpm.
 - Every motion effect must respect prefers-reduced-motion and leave content visible without JS.
 - Real <button>/<a> elements, visible focus ring, text contrast >= 4.5:1.
 - Never use AI-generated imagery for client products or results. Client media is real.
-- Secrets only in env vars: RESEND_API_KEY, CONTACT_TO_EMAIL, PLAUSIBLE_DOMAIN.
+- Secrets only in env vars: RESEND_API_KEY, CONTACT_TO_EMAIL, UMAMI_WEBSITE_ID.
 - Run `pnpm lint && pnpm typecheck && pnpm build` before saying a task is done.
 
 ## Tokens
