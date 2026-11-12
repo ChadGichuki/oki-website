@@ -1,6 +1,6 @@
 import { site } from "@/content/site";
-import { formatStat } from "@/lib/format";
 import { Container } from "@/components/ui/Container";
+import { CountUp } from "@/components/motion/CountUp";
 
 export function Results() {
   const { label, stats } = site.results;
@@ -14,7 +14,7 @@ export function Results() {
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse justify-end gap-3 border-b border-line-strong py-8 pr-6">
               <dt className="text-body text-muted">{stat.label}</dt>
-              <dd className="type-display text-[44px] leading-none md:text-[72px]">{formatStat(stat)}</dd>
+              <dd className="type-display text-[44px] leading-none md:text-[72px]"><CountUp stat={stat} /></dd>
             </div>
           ))}
         </dl>

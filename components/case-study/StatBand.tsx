@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 import type { Stat } from "@/content/types";
-import { formatStat } from "@/lib/format";
 import { Container } from "@/components/ui/Container";
+import { CountUp } from "@/components/motion/CountUp";
 
 export function StatBand({ stats }: { stats: Stat[] }) {
   // Canvas: 88px for a row of three, 72px for a row of four.
@@ -16,7 +16,7 @@ export function StatBand({ stats }: { stats: Stat[] }) {
               <dd
                 className={`type-display leading-none ${four ? "text-[56px] md:text-[72px]" : "text-[56px] md:text-[88px]"}`}
               >
-                {formatStat(stat)}
+                <CountUp stat={stat} />
               </dd>
             </div>
           ))}

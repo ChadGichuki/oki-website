@@ -57,6 +57,13 @@ const config: Config = {
         "btn-md": "44px",
         "btn-lg": "52px",
       },
+      keyframes: {
+        // Track holds two identical rows, so -50% lands exactly on the start of the copy.
+        marquee: { from: { transform: "translateX(0)" }, to: { transform: "translateX(-50%)" } },
+      },
+      animation: {
+        marquee: "marquee 38s linear infinite",
+      },
       transitionTimingFunction: {
         reveal: "cubic-bezier(.2,.7,.1,1)",
       },

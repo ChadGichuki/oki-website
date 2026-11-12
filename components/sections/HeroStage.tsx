@@ -51,9 +51,7 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     let killTween: (() => void) | undefined;
     const timers: number[] = [];
 
-    const showNow = () => {
-      revealed = true;
-      detach();
+    const setVisible = () => {
       for (const line of lines) {
         line.style.opacity = "1";
         line.style.transform = "none";
@@ -62,10 +60,17 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
 
     if (reducedMotion) {
       // No autoplaying motion: hold the first frame/poster and show the text.
+      // Must not touch detach(): its handlers are declared further down (TDZ).
       video.pause();
-      showNow();
+      setVisible();
       return () => root.classList.remove("hero-armed");
     }
+
+    const showNow = () => {
+      revealed = true;
+      detach();
+      setVisible();
+    };
 
     // Start loading GSAP now so the reveal isn't waiting on the network at 5s.
     const gsapReady = Promise.all([import("gsap"), import("gsap/CustomEase")]);

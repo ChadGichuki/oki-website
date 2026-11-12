@@ -24,13 +24,14 @@ function Row({ hidden = false }: { hidden?: boolean }) {
 }
 
 /**
- * Client strip. Static for now; the second row is the duplicate the 38s
- * marquee loop will translate into view (motion pass).
+ * Motion spec 2: 38s linear loop that pauses on hover. Pure CSS, so it runs without JS;
+ * motion-safe: means reduced-motion visitors get a still strip. The second row is the
+ * aria-hidden duplicate that makes the loop seamless.
  */
 export function ClientMarquee() {
   return (
-    <section aria-label={site.clients.label} className="on-dark overflow-hidden border-t border-line-dark bg-ink py-7">
-      <div className="flex w-max font-display text-[28px] font-extrabold uppercase text-muted-dark-soft [font-stretch:80%]">
+    <section aria-label={site.clients.label} className="group on-dark overflow-hidden border-t border-line-dark bg-ink py-7">
+      <div className="flex w-max motion-safe:animate-marquee group-hover:[animation-play-state:paused] font-display text-[28px] font-extrabold uppercase text-muted-dark-soft [font-stretch:80%]">
         <Row />
         <Row hidden />
       </div>

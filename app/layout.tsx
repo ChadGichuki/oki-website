@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter } from "next/font/google";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SiteFooter } from "@/components/SiteFooter";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Header + <main id="main"> come from the route-group layouts. */}
         {children}
         <SiteFooter />
+        <MotionProvider />
       </body>
     </html>
   );
