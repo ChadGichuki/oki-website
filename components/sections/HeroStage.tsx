@@ -143,7 +143,7 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     <section
       ref={rootRef}
       aria-labelledby={labelledBy}
-      className="on-dark relative isolate h-svh w-full overflow-hidden bg-ink text-paper"
+      className="on-dark relative isolate min-h-svh w-full overflow-hidden bg-ink text-paper"
     >
       <video
         ref={videoRef}

@@ -12,7 +12,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-line bg-paper">
       <Container className="flex h-[72px] items-center justify-between gap-6">
         <Link href="/" aria-label={site.logoLabel} className="inline-flex min-h-btn-md items-center">
-          <Logo />
+          <Logo priority />
         </Link>
 
         <nav aria-label={site.menu.label} className="hidden lg:block">

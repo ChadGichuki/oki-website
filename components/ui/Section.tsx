@@ -14,6 +14,8 @@ type SectionProps = {
   tone?: Tone;
   /** Id of the heading that names this section. */
   labelledBy?: string;
+  /** Accessible name when the section has no visible heading. */
+  label?: string;
   /** Draw a thin top rule. */
   rule?: boolean;
   /** Set false to render children full-bleed. */
@@ -27,16 +29,18 @@ export function Section({
   id,
   tone = "paper",
   labelledBy,
+  label,
   rule = false,
   contained = true,
   className = "",
   children,
 }: SectionProps) {
-  const ruleClass = rule ? (tone === "ink" ? "border-t border-card" : "border-t border-line") : "";
+  const ruleClass = rule ? (tone === "ink" ? "border-t border-line-dark" : "border-t border-line") : "";
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
+      aria-label={labelledBy ? undefined : label}
       className={`scroll-mt-20 py-section-mobile md:py-section ${tones[tone]} ${ruleClass} ${className}`}
     >
       {contained ? <Container>{children}</Container> : children}

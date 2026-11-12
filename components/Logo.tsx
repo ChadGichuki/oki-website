@@ -1,18 +1,28 @@
+import Image from "next/image";
+import logo from "@/public/brand/oki-logo.png";
+import mark from "@/public/brand/oki-mark.png";
+import { site } from "@/content/site";
+
 type LogoProps = {
-  tone?: "ink" | "paper";
+  /** "full": bulb + "ki DIGITAL" lockup (light surfaces). "mark": orange bulb tile (any surface). */
+  variant?: "full" | "mark";
   className?: string;
+  priority?: boolean;
 };
 
-/**
- * Full OKI Digital lockup.
- * TODO: replace this typographic placeholder with the SVG from the OKI design canvas.
- */
-export function Logo({ tone = "ink", className = "" }: LogoProps) {
-  const color = tone === "ink" ? "text-ink" : "text-paper";
+/** OKI Digital logo, from the design canvas assets. */
+export function Logo({ variant = "full", className = "", priority = false }: LogoProps) {
+  if (variant === "mark") {
+    return <Image src={mark} alt={site.logoAlt} width={32} height={32} className={`rounded ${className}`} />;
+  }
   return (
-    <span className={`inline-flex items-baseline gap-1.5 ${color} ${className}`} aria-hidden="true">
-      <span className="type-display text-[34px] leading-none">OKI</span>
-      <span className="type-label text-label-sm leading-none">Digital</span>
-    </span>
+    <Image
+      src={logo}
+      alt={site.logoAlt}
+      height={40}
+      style={{ width: "auto" }}
+      priority={priority}
+      className={className}
+    />
   );
 }
