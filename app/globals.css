@@ -48,3 +48,25 @@
     @apply text-label font-medium uppercase;
   }
 }
+
+/*
+ * Hero reveal. Lines start hidden only when JS is present (html.js, set inline
+ * in <head>). If the hero script never runs, the failsafe animation shows them
+ * after 3s. Once HeroStage mounts it adds .hero-armed and takes over.
+ */
+@keyframes hero-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero-line {
+    opacity: 0;
+    animation: hero-failsafe 0.01s linear 3s forwards;
+  }
+
+  .js .hero-armed .hero-line {
+    animation: none;
+  }
+}
