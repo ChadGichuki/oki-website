@@ -91,3 +91,19 @@ export interface CaseStudy {
     description: string;
   };
 }
+
+export interface HeadlineLine {
+  text: string;
+  /** Substring of `text` rendered in brand orange. */
+  highlight?: string;
+}
+
+export interface HeroContent {
+  /** Each entry is one revealed line of the h1. */
+  headline: HeadlineLine[];
+  subline: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+  /** 16:9 `sources` for desktop, 9:16 `mobileSources` for phones. */
+  video: VideoMedia & { mobileSources: VideoSource[] };
+}

@@ -30,7 +30,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${inter.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Flags JS support before first paint so motion can hide content without a flash. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="flex min-h-svh flex-col">
         <a
           href="#main"

@@ -1,4 +1,5 @@
-// Homepage sections are built in a later task.
+import { Hero } from "@/components/sections/Hero";
+
 export default function HomePage() {
-  return null;
+  return <Hero />;
 }
