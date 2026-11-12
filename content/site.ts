@@ -203,6 +203,29 @@ const contact = {
       options: ["Prefer not to say", "[Budget range 1]", "[Budget range 2]", "[Budget range 3]"],
     } satisfies SelectField,
     submit: "Send message",
+    sending: "Sending…",
+    whatsapp: { label: "WhatsApp us", href: "https://wa.me/254714964800" } satisfies Link,
+    // Hidden from people; bots that fill every field trip it.
+    honeypot: { name: "website", label: "Leave this field empty" },
+    privacyNote: { before: "We only use your details to reply to you. See our ", link: { label: "privacy notice", href: "/privacy" } satisfies Link, after: "." },
+    messages: {
+      success: {
+        title: "Message sent.",
+        body: "Thanks. We reply by email within 24 hours with next steps or a proposal.",
+        again: "Send another message",
+      },
+      invalid: "Please check the highlighted fields.",
+      tooFast: "That was quick. Please check your details and send again.",
+      rateLimited: "Too many messages from your connection. Please try again in a few minutes, or email info@okidigital.co.ke.",
+      failed: "We couldn't send your message. Please try again, or email info@okidigital.co.ke.",
+      noScript: "Your browser blocked part of the form. Please email info@okidigital.co.ke or WhatsApp us instead.",
+      fields: {
+        name: "Enter your name.",
+        email: "Enter a valid email address.",
+        message: "Tell us a little about what you want to achieve (at least 10 characters).",
+        tooLong: "This is too long.",
+      },
+    },
   },
 };
 
