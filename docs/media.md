@@ -1,0 +1,71 @@
+# Media manifest
+
+Every media slot on the site, with the file name and location the code expects.
+Drop files at these exact paths; videos go on the CDN and their URLs are listed in a reply.
+
+Rules
+- Lowercase, hyphens, no spaces: `public/media/<page>/<slot>.<ext>`.
+- Images: AVIF or WebP preferred; JPG/PNG are fine at the sizes below — next/image serves
+  AVIF/WebP automatically. Give at least the pixel size listed (that's 2x the display size).
+- Keep the subject centred: some frames crop differently on phones (noted below).
+- Video posters are the first frame (or best frame) of that video, same aspect ratio.
+- Videos: H.264 MP4 is required; a WebM (VP9/AV1) next to it is optional and smaller.
+  Muted (no audio track), loops cleanly.
+- Real client media only. No AI-generated imagery for client products or results (CLAUDE.md).
+
+## Homepage
+
+| Slot | File / URL | Aspect | Min size | Notes |
+|---|---|---|---|---|
+| Hero poster | `public/media/hero/poster.avif` (or `.webp`) | 16:9 | 1920×1080 | **< 80 KB**. The lit-bulb frame. Phones crop to a centred 9:16 |
+| Hero video, desktop | CDN: 16:9 MP4 (+ WebM) | 16:9 | 1920×1080 | First segment < 3 MB. Headline reveals at 0:05 |
+| Hero video, phones | CDN: 9:16 MP4 (+ WebM) | 9:16 | 1080×1920 | Same cut, reframed |
+| Winners card | `public/media/work/winners-card.jpg` | 2:1 | 2400×1200 | Phones crop to a centred 4:3 |
+| Winners hover clip | CDN: MP4 (+ WebM) | 2:1 | 1600×800 | 6 s loop, plays on desktop hover |
+| Niche card | `public/media/work/niche-card.jpg` | 4:5 | 1200×1500 | |
+| LinkedIn card | `public/media/work/linkedin-card.jpg` | 4:5 | 1200×1500 | Collage of post analytics |
+| Agency OS demo poster | `public/media/agency-os/demo-poster.webp` | 16:10 | 1600×1000 | |
+| Agency OS demo video | CDN: MP4 (+ WebM) | 16:10 | 1600×1000 | Screen recording, muted loop |
+| Credentials PDF | `public/credentials.pdf` | | | Linked from the contact section |
+
+## /work/winners
+
+| Slot | File / URL | Aspect | Min size |
+|---|---|---|---|
+| Hero clip poster | `public/media/work/winners/hero-poster.jpg` | 16:7 (phones crop to 4:3) | 2400×1050 |
+| Hero clip | CDN: MP4 (+ WebM) | 16:7 | 1920×840 |
+| TikTok reel 1 | `public/media/work/winners/reel-1.jpg` | 9:16 | 1080×1920 |
+| Recipe video | `public/media/work/winners/recipe.jpg` | 9:16 | 1080×1920 |
+| Sales promo poster | `public/media/work/winners/promo-poster.jpg` | 9:16 | 1080×1920 |
+| Employee feature | `public/media/work/winners/employee-feature.jpg` | 9:16 | 1080×1920 |
+| Carousel spread | `public/media/work/winners/carousel.jpg` | 4:3 | 1600×1200 |
+| Analytics screenshot | `public/media/work/winners/analytics.png` | 4:3 | 1600×1200 |
+
+## /work/niche
+
+| Slot | File / URL | Aspect | Min size |
+|---|---|---|---|
+| Hero clip poster | `public/media/work/niche/hero-poster.jpg` | 16:7 (phones crop to 4:3) | 2400×1050 |
+| Hero clip | CDN: MP4 (+ WebM) | 16:7 | 1920×840 |
+| Influencer reel | `public/media/work/niche/influencer-reel.jpg` | 9:16 | 1080×1920 |
+| Behind the chair | `public/media/work/niche/behind-the-chair.jpg` | 9:16 | 1080×1920 |
+| Campaign poster | `public/media/work/niche/campaign-poster.jpg` | 9:16 | 1080×1920 |
+| Spa experience | `public/media/work/niche/spa.jpg` | 9:16 | 1080×1920 |
+| Ad creative | `public/media/work/niche/ad-creative.jpg` | 4:3 | 1600×1200 |
+| Analytics screenshot | `public/media/work/niche/analytics.png` | 4:3 | 1600×1200 |
+
+## /work/linkedin
+
+| Slot | File | Aspect | Min size |
+|---|---|---|---|
+| Founder profile screenshot | `public/media/work/linkedin/founder-profile.png` | 4:3 | 1600×1200 |
+| Post analytics 1–4 | `public/media/work/linkedin/analytics-1.png` … `analytics-4.png` | 4:5 | 1080×1350 |
+
+Screenshots (analytics, profile) as PNG keep text crisp; photos as JPG/AVIF/WebP.
+The extension can differ from the table: tell me if `reel-1.webp` is what you have.
+
+## Alt text
+
+Each image and video needs a one-line description of what it shows, e.g.
+"Winners Dairy TikTok reel: a chef pours yoghurt over granola". Send them with the files,
+or I'll draft them from the files for you to approve.
