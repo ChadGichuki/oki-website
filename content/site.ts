@@ -244,6 +244,36 @@ export const site = {
   name: "OKI Digital",
   url: "https://okidigital.co.ke",
   description: "Creative social media and LinkedIn agency, Kenya.",
+  locale: "en_KE",
+  seo: {
+    home: {
+      title: "OKI Digital · Creative social media and LinkedIn agency in Kenya",
+      description:
+        "OKI Digital is a Kenyan creative agency building community, reach and a real sales pipeline through social media and LinkedIn for brands and leaders.",
+    },
+    ogImageAlt: "OKI Digital: Content that sells. Communities that stay.",
+    caseOgImageAlt: "OKI Digital case study",
+    notFound: {
+      title: "Page not found",
+      description: "This page doesn't exist. Head back to the OKI Digital homepage.",
+    },
+  },
+  organization: {
+    legalName: "OKI Digital",
+    email: "info@okidigital.co.ke",
+    telephone: "+254714964800",
+    logo: "/brand/oki-logo.png",
+    addressCountry: "KE",
+    areaServed: "KE",
+    // TODO: add the LinkedIn, Instagram and TikTok profile URLs (same as the footer TODO).
+    sameAs: [] as string[],
+  },
+  notFoundPage: {
+    eyebrow: "404",
+    title: "Page not found.",
+    body: "The page you're looking for has moved or never existed.",
+    cta: { label: "Back to the homepage", href: "/" } satisfies Link,
+  },
   skipLink: "Skip to content",
   logoAlt: "OKI Digital",
   logoLabel: "OKI Digital, home",

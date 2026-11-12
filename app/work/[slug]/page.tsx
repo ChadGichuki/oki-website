@@ -10,6 +10,11 @@ import { Quote } from "@/components/case-study/Quote";
 import { StatBand } from "@/components/case-study/StatBand";
 import { Story } from "@/components/case-study/Story";
 import { WorkGrid } from "@/components/case-study/WorkGrid";
+import { JsonLd } from "@/components/JsonLd";
+import { TrackEvent } from "@/components/TrackEvent";
+import { EVENTS } from "@/lib/analytics";
+import { pageMetadata } from "@/lib/seo";
+import { caseStudyJsonLd } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,12 +28,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
-  return {
+  return pageMetadata({
     title: study.seo.title,
     description: study.seo.description,
-    alternates: { canonical: `/work/${study.slug}` },
-    openGraph: { title: study.seo.title, description: study.seo.description, type: "article" },
-  };
+    path: `/work/${study.slug}`,
+    type: "article",
+    defaultImage: false, // ./opengraph-image.tsx renders one per case study
+  });
 }
 
 export default async function CaseStudyPage({ params }: Props) {
@@ -38,6 +44,8 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={caseStudyJsonLd(study)} />
+      <TrackEvent name={EVENTS.caseStudyView} props={{ slug: study.slug }} />
       <CaseHero study={study} />
       <StatBand stats={study.stats} />
       {study.variant === "standard" ? (

@@ -179,7 +179,14 @@ interface CaseStudyBase {
   facts: CaseFact[];
   heroMedia?: MediaTile;
   stats: Stat[];
-  seo: { title: string; description: string };
+  seo: {
+    title: string;
+    description: string;
+    /** ISO date the case study went live (Article JSON-LD). */
+    published?: string;
+    /** ISO date of the last meaningful edit. */
+    modified?: string;
+  };
 }
 
 export interface StandardCaseStudy extends CaseStudyBase {

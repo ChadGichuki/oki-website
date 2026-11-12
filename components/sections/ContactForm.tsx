@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { submitContact } from "@/app/actions/contact";
 import type { site } from "@/content/site";
+import { EVENTS, track } from "@/lib/analytics";
 import { STARTED_AT_FIELD, initialContactState, type ContactFieldName } from "@/lib/contact-state";
 
 type FormContent = (typeof site)["contact"]["form"];
@@ -29,13 +30,18 @@ function ContactFormInner({ form, onReset }: { form: FormContent; onReset: () =>
   const summaryRef = useRef<HTMLParagraphElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
   const id = useId();
+  // The service picked in the submitted form, for the contact_submit event.
+  const lastService = useRef("");
 
   // Stamped after hydration, so it measures time the visitor actually had the form.
   // eslint-disable-next-line react-hooks/set-state-in-effect -- needs the client clock, not the build-time one
   useEffect(() => setStartedAt(String(Date.now())), []);
 
   useEffect(() => {
-    if (state.status === "success") successRef.current?.focus();
+    if (state.status === "success") {
+      successRef.current?.focus();
+      track(EVENTS.contactSubmit, { service: lastService.current });
+    }
     if (state.status !== "error") return;
     const firstInvalid = formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]');
     (firstInvalid ?? summaryRef.current)?.focus();
@@ -75,7 +81,12 @@ function ContactFormInner({ form, onReset }: { form: FormContent; onReset: () =>
   const { fields, service, budget, honeypot, privacyNote } = form;
 
   return (
-    <form ref={formRef} action={action} aria-label={form.label} noValidate className="grid gap-5 sm:grid-cols-2">
+    <form
+      ref={formRef}
+      action={action}
+      onSubmit={(e) => {
+        lastService.current = String(new FormData(e.currentTarget).get(service.name) ?? "");
+      }} aria-label={form.label} noValidate className="grid gap-5 sm:grid-cols-2">
       {error ? (
         <p ref={summaryRef} tabIndex={-1} role="alert" className="border border-brand px-4 py-3 text-[15px] text-paper sm:col-span-2">
           {error.message}
@@ -179,6 +190,8 @@ function ContactFormInner({ form, onReset }: { form: FormContent; onReset: () =>
           href={form.whatsapp.href}
           target="_blank"
           rel="noopener noreferrer"
+          // Tracked here, not with a tagged class: Plausible ignores tagged clicks inside a <form>.
+          onClick={() => track(EVENTS.whatsappClick, { location: "form" })}
           className="inline-flex min-h-btn-lg items-center justify-center rounded-full border border-paper px-8 font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
         >
           {form.whatsapp.label}

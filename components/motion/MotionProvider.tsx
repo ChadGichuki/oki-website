@@ -20,7 +20,7 @@ function samePageHash(event: MouseEvent): { url: URL; target: HTMLElement; link:
 }
 
 /**
- * Motion spec 6: Lenis smooth wheel scrolling, driven by GSAP's ticker so ScrollTrigger
+ * Motion spec 6: Lenis smooth wheel scrolling (mouse and trackpad devices only), driven by GSAP's ticker so ScrollTrigger
  * stays in sync. No scroll-jacking: touch stays native and nothing pins or snaps.
  * Same-page anchor links glide to their target (respecting scroll-margin-top), update the
  * URL and move focus. On every route change, ScrollTriggers left from the old page die.
@@ -31,7 +31,8 @@ export function MotionProvider() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (reduced) return;
+    // Lenis only smooths wheel scrolling; touch stays native, so phones skip the download.
+    if (reduced || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     let disposed = false;
     let teardown: (() => void) | undefined;
 
