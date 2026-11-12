@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -42,10 +41,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           {site.skipLink}
         </a>
-        <SiteHeader />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
+        {/* Header + <main id="main"> come from the route-group layouts. */}
+        {children}
         <SiteFooter />
       </body>
     </html>

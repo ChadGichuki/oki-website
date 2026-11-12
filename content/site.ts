@@ -93,7 +93,7 @@ const work = {
       eyebrow: "LinkedIn · founders and executives",
       title: "Leaders people listen to",
       placeholder: "[ Collage of LinkedIn post analytics ]",
-      placeholderTone: "brand",
+      tone: "brand",
     },
   ] satisfies WorkCard[],
 };
@@ -206,6 +206,17 @@ const contact = {
   },
 };
 
+const caseStudy = {
+  backLink: { label: "← All work", href: "/#work" } satisfies Link,
+  heroLabel: "Overview",
+  statsLabel: "Results",
+  story: { challenge: "The challenge", whatWeDid: "What we did" },
+  workTitle: "The work",
+  quoteLabel: "Client quote",
+  leaderRows: { challenge: "Challenge", whatWeDid: "What we did", outcome: "Outcome" },
+  next: { label: "Next case study" },
+};
+
 export const site = {
   name: "OKI Digital",
   url: "https://okidigital.co.ke",
@@ -223,6 +234,7 @@ export const site = {
   agencyOs,
   leaders,
   contact,
+  caseStudy,
   nav: [
     { label: "Work", href: "/#work" },
     { label: "Approach", href: "/#approach" },
