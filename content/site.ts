@@ -37,6 +37,8 @@ const hero: HeroContent = {
     kind: "video",
     sources: [{ src: "/media/hero/hero-video.mp4", type: "video/mp4" }],
     mobileSources: [],
+    // Bulb shrinks 2.8s → 4.5s in this cut; text starts at 2.9s and lands ~4.5s.
+    revealAt: 2.9,
     poster: "/media/hero/poster.webp",
     alt: "An orange neon light bulb draws itself line by line on a black background, then glows.",
     width: 1920,

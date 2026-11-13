@@ -31,11 +31,14 @@ Container 1280px, padding 24px (16px mobile). Sections 120px (64px mobile).
 Buttons: pill, min 44px tall, primary 52px.
 
 ## Hero video
-100svh, full-bleed, object-fit cover, autoplay muted playsInline loop.
+100svh, full-bleed, object-fit cover, autoplay muted playsInline. Plays once, no loop, and
+holds its last frame (the lit bulb) as the permanent background.
 16:9 source for desktop, 9:16 for phones. Poster = lit bulb frame (AVIF/WebP < 80 KB).
 Flat rgba(0,0,0,0.45) overlay. No gradient.
-Headline reveals when video.currentTime >= 5s. Show text at once if: the video hasn't started
-within 1.5s, Save-Data is on, or prefers-reduced-motion. Text stays visible on later loops.
+Text flies in at hero.video.revealAt (as the bulb starts shrinking) and lands as it settles:
+headline lines rise out of a mask with a slight tilt, other lines fade up 24px, the highlight
+word flickers on like neon. Show text at once if: the video hasn't started within 1.5s,
+Save-Data is on, or prefers-reduced-motion (which also jumps straight to the last frame).
 
 ## Motion spec
 1. Line reveal: translateY 40% -> 0, opacity 0 -> 1, 0.9s, 120ms stagger, cubic-bezier(.2,.7,.1,1).
