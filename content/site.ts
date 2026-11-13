@@ -6,6 +6,7 @@ import type {
   Feature,
   HeroContent,
   HighlightText,
+  ImageMedia,
   Lane,
   Link,
   Quote,
@@ -76,6 +77,14 @@ const work = {
     eyebrow: "Winners Dairy Products · Ndumberi Dairies",
     title: "From no online sales to KES 1M a month",
     meta: "TikTok · Facebook · LinkedIn — 2+ years",
+    // INSPO (branch feat/inspo only): replace the file with a real shoot still.
+    media: {
+      kind: "image",
+      src: "/media/work/winners-card.jpg",
+      alt: "Inspiration placeholder: content creator filming dairy plant workers holding yoghurt bottles.",
+      width: 1344,
+      height: 672,
+    },
     placeholder: "[ Winners — on-site shoot still; hover plays a 6s clip ]",
   } satisfies WorkCard,
   cards: [
@@ -96,6 +105,13 @@ const work = {
       slug: "linkedin",
       eyebrow: "LinkedIn · founders and executives",
       title: "Leaders people listen to",
+      media: {
+        kind: "image",
+        src: "/media/work/linkedin-card.jpg",
+        alt: "Inspiration placeholder: collage of LinkedIn post analytics screenshots on orange.",
+        width: 896,
+        height: 1120,
+      },
       placeholder: "[ Collage of LinkedIn post analytics ]",
       tone: "brand",
     },
@@ -157,6 +173,13 @@ const agencyOs = {
   badgeText: "AI features that learn your brand",
   demo: {
     // TODO: Agency OS v1 screen recording (muted loop) + poster.
+    media: {
+      kind: "image",
+      src: "/media/agency-os/demo-poster.webp",
+      alt: "Inspiration placeholder: Agency OS client portal with a content calendar and a post awaiting approval.",
+      width: 1203,
+      height: 752,
+    } satisfies ImageMedia,
     placeholder: "[ Agency OS v1 demo video — screen recording, muted loop ]",
     caption: "Agency OS v1 · client portal",
   },

@@ -69,3 +69,33 @@ The extension can differ from the table: tell me if `reel-1.webp` is what you ha
 Each image and video needs a one-line description of what it shows, e.g.
 "Winners Dairy TikTok reel: a chef pours yoghurt over granola". Send them with the files,
 or I'll draft them from the files for you to approve.
+
+## Content brief per slot (inspo branch)
+
+Branch `feat/inspo` fills every slot with an AI-generated reference image, labelled
+"INSPO · NOT CLIENT MEDIA" with the file it stands in for. It shows the kind of shot each
+slot needs. **Never merge it**: CLAUDE.md forbids AI imagery for client work. To swap one,
+overwrite the file at the same path with the real photo (same aspect ratio), then update
+`width`/`height` and the `alt` text in the content file.
+
+| File | What it should show |
+|---|---|
+| `work/winners-card.jpg` | Behind-the-scenes from a Winners shoot: real staff with real product, ideally the OKI crew filming in frame. People centred (phones crop the sides) |
+| `work/linkedin-card.jpg` | 4–6 real LinkedIn post-analytics screenshots arranged on flat orange, names blurred |
+| `agency-os/demo-poster.webp` | A clean frame from the Agency OS screen recording: calendar plus a post awaiting approval |
+| `work/winners/hero-poster.jpg` | Wide, cinematic still: the farm, the plant or the shoot. Keep the subject in the middle third |
+| `work/winners/reel-1.jpg` | Frame from a top TikTok: a face plus product, with the on-screen caption visible |
+| `work/winners/recipe.jpg` | Frame from a recipe video, overhead, product being used |
+| `work/winners/promo-poster.jpg` | A real sales-promo post: products, prices, where to buy |
+| `work/winners/employee-feature.jpg` | An employee-feature post: portrait at work plus name/role caption |
+| `work/winners/carousel.jpg` | 3 slides of one carousel laid side by side on a plain background |
+| `work/winners/analytics.png` | Meta Business Suite insights: reach over the engagement, follower growth. Page name visible or blurred, as the client prefers |
+| `work/niche/hero-poster.jpg` | Wide still of the Niche space or a cut in progress, warm light |
+| `work/niche/influencer-reel.jpg` | Frame from the influencer's reel at Niche, caption visible (needs her sign-off) |
+| `work/niche/behind-the-chair.jpg` | Close-up of a barber at work: clippers, the fade, the mirror |
+| `work/niche/campaign-poster.jpg` | The campaign's key poster (the Mother's Day one would fit here) |
+| `work/niche/spa.jpg` | Sauna, steam room or treatment room, a client relaxing |
+| `work/niche/ad-creative.jpg` | The best-performing ad, shown as it appeared in the feed (phone screenshot) |
+| `work/niche/analytics.png` | Ads Manager results for the campaign: results, reach, cost per result in KES |
+| `work/linkedin/founder-profile.png` | Desktop screenshot of the founder's profile: banner, headline, About, Featured |
+| `work/linkedin/analytics-1…4.png` | Phone screenshots: impressions/reach, audience demographics, 12-month growth, a top post with its engagement. Client names and photos blurred |

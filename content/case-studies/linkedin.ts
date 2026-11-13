@@ -58,6 +58,13 @@ export const linkedin: LeadersCaseStudy = {
       href: "https://www.linkedin.com/in/mercy-muthoki-digitalmarketingexpert/",
     },
     screenshot: {
+      media: {
+        kind: "image",
+        src: "/media/work/linkedin/founder-profile.png",
+        alt: "Inspiration placeholder: LinkedIn profile page with headline, About and Featured posts.",
+        width: 1168,
+        height: 876,
+      },
       placeholder: "[ Screenshot of the founder’s LinkedIn profile — header, headline and a top post ]",
     },
   },
@@ -68,10 +75,34 @@ export const linkedin: LeadersCaseStudy = {
       {
         aspect: "aspect-[4/5]",
         tiles: [
-          { placeholder: "[ Post analytics 1 ]" },
-          { placeholder: "[ Post analytics 2 ]" },
-          { placeholder: "[ Post analytics 3 ]", tone: "brand" },
-          { placeholder: "[ Post analytics 4 ]" },
+          { media: {
+            kind: "image",
+            src: "/media/work/linkedin/analytics-1.png",
+            alt: "Inspiration placeholder: LinkedIn post analytics with impressions and reach.",
+            width: 896,
+            height: 1120,
+          }, placeholder: "[ Post analytics 1 ]" },
+          { media: {
+            kind: "image",
+            src: "/media/work/linkedin/analytics-2.png",
+            alt: "Inspiration placeholder: LinkedIn post audience demographics.",
+            width: 896,
+            height: 1120,
+          }, placeholder: "[ Post analytics 2 ]" },
+          { media: {
+            kind: "image",
+            src: "/media/work/linkedin/analytics-3.png",
+            alt: "Inspiration placeholder: LinkedIn creator analytics over a year.",
+            width: 896,
+            height: 1120,
+          }, placeholder: "[ Post analytics 3 ]", tone: "brand" },
+          { media: {
+            kind: "image",
+            src: "/media/work/linkedin/analytics-4.png",
+            alt: "Inspiration placeholder: LinkedIn post by a banking leader with engagement counts.",
+            width: 896,
+            height: 1120,
+          }, placeholder: "[ Post analytics 4 ]" },
         ],
       },
     ],

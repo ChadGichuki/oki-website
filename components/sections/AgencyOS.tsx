@@ -35,6 +35,7 @@ export function AgencyOS() {
         <FadeUp as="figure" className="flex flex-col gap-3">
           {/* Demo video slot: VideoMedia goes in content when the recording exists. */}
           <MediaSlot
+            media={demo.media}
             placeholder={demo.placeholder}
             aspect="aspect-[16/10]"
             sizes="(min-width: 1024px) 700px, 100vw"

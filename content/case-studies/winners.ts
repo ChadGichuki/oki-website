@@ -13,7 +13,13 @@ export const winners: StandardCaseStudy = {
     { label: "Platforms", value: "TikTok · Facebook · LinkedIn" },
     { label: "Services", value: "Strategy, content, shoots, management" },
   ],
-  heroMedia: { placeholder: "[ Winners hero clip — on-site shoot, muted loop ]" },
+  heroMedia: { media: {
+          kind: "image",
+          src: "/media/work/winners/hero-poster.jpg",
+          alt: "Inspiration placeholder: farmer walking dairy cows past milk churns in the Kenyan highlands at dawn.",
+          width: 1317,
+          height: 576,
+        }, placeholder: "[ Winners hero clip — on-site shoot, muted loop ]" },
   stats: [
     { prefix: "KES ", value: 1, suffix: "M", label: "monthly digital sales, up from KES 0" },
     { value: 10, suffix: "M+", label: "audience reached by our posts" },
@@ -36,15 +42,51 @@ export const winners: StandardCaseStudy = {
     {
       aspect: "aspect-[9/16]",
       tiles: [
-        { placeholder: "[ TikTok reel 1 ]" },
-        { placeholder: "[ Recipe video ]" },
-        { placeholder: "[ Sales promo poster ]", tone: "brand" },
-        { placeholder: "[ Employee feature ]" },
+        { media: {
+          kind: "image",
+          src: "/media/work/winners/reel-1.jpg",
+          alt: "Inspiration placeholder: TikTok-style reel of a woman holding yoghurt in a supermarket aisle.",
+          width: 752,
+          height: 1337,
+        }, placeholder: "[ TikTok reel 1 ]" },
+        { media: {
+          kind: "image",
+          src: "/media/work/winners/recipe.jpg",
+          alt: "Inspiration placeholder: overhead recipe video frame of milk poured into masala chai.",
+          width: 752,
+          height: 1337,
+        }, placeholder: "[ Recipe video ]" },
+        { media: {
+          kind: "image",
+          src: "/media/work/winners/promo-poster.jpg",
+          alt: "Inspiration placeholder: dairy sales promo poster with product prices.",
+          width: 752,
+          height: 1337,
+        }, placeholder: "[ Sales promo poster ]", tone: "brand" },
+        { media: {
+          kind: "image",
+          src: "/media/work/winners/employee-feature.jpg",
+          alt: "Inspiration placeholder: portrait of a quality-control employee in a dairy plant.",
+          width: 752,
+          height: 1337,
+        }, placeholder: "[ Employee feature ]" },
       ],
     },
     {
       aspect: "aspect-[4/3]",
-      tiles: [{ placeholder: "[ Carousel spread ]" }, { placeholder: "[ Analytics screenshot ]" }],
+      tiles: [{ media: {
+          kind: "image",
+          src: "/media/work/winners/carousel.jpg",
+          alt: "Inspiration placeholder: three-slide yoghurt flavour carousel.",
+          width: 1168,
+          height: 876,
+        }, placeholder: "[ Carousel spread ]" }, { media: {
+          kind: "image",
+          src: "/media/work/winners/analytics.png",
+          alt: "Inspiration placeholder: social insights dashboard showing reach rising over two years.",
+          width: 1168,
+          height: 876,
+        }, placeholder: "[ Analytics screenshot ]" }],
     },
   ],
   // TODO: approved quote and name from the Winners Head of Marketing.
