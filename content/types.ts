@@ -79,6 +79,7 @@ export interface HeadlineLine {
 }
 
 export interface HeroContent {
+  /** Not shown in the hero; used as the kicker on the social share (OG) image. */
   eyebrow: string;
   /** Each entry is one revealed line of the h1. */
   headline: HeadlineLine[];
@@ -86,7 +87,15 @@ export interface HeroContent {
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   /** 16:9 `sources` for desktop, 9:16 `mobileSources` for phones. */
-  video: VideoMedia & { mobileSources: VideoSource[] };
+  video: VideoMedia & {
+    mobileSources: VideoSource[];
+    /**
+     * Seconds into the clip when the text starts flying in. Tuned so the text lands as
+     * the bulb settles; re-time it for each new cut. The clip plays once and holds its
+     * last frame.
+     */
+    revealAt: number;
+  };
 }
 
 export interface Link {

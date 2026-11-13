@@ -29,7 +29,7 @@ export function SiteHeader({ variant = "full" }: SiteHeaderProps) {
   if (variant === "case") {
     return (
       <header className="sticky top-0 z-50 border-b border-line bg-paper">
-        <Container className="flex h-[72px] items-center justify-between gap-4">
+        <Container className="flex h-header items-center justify-between gap-4">
           <Link href="/" aria-label={site.logoLabel} className="inline-flex min-h-btn-md shrink-0 items-center">
             <Logo priority />
           </Link>
@@ -41,7 +41,7 @@ export function SiteHeader({ variant = "full" }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper">
-      <Container className="flex h-[72px] items-center justify-between gap-6">
+      <Container className="flex h-header items-center justify-between gap-6">
         <Link href="/" aria-label={site.logoLabel} className="inline-flex min-h-btn-md items-center">
           <Logo priority />
         </Link>

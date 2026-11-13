@@ -3,17 +3,28 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import type { VideoSource } from "@/content/types";
 
-/** Reveal headline once playback reaches this point (CLAUDE.md → Hero video). */
-const REVEAL_AT_SECONDS = 5;
 /** If playback hasn't started by now, show the text straight away. */
 const START_TIMEOUT_MS = 1500;
+
+/** Pause on the final (lit bulb) frame. */
+function holdLastFrame(v: HTMLVideoElement) {
+  v.pause();
+  const jump = () => {
+    v.currentTime = Math.max(0, v.duration - 0.05);
+  };
+  if (v.readyState >= 1) jump();
+  else v.addEventListener("loadedmetadata", jump, { once: true });
+}
+/** holdLastFrame as hand-written ES5 for the inline script (minifiers rename functions). */
+const HOLD_LAST_FRAME_JS = `function h(v){v.pause();function j(){v.currentTime=Math.max(0,v.duration-0.05)}v.readyState>=1?j():v.addEventListener("loadedmetadata",j,{once:true})}`;
 /**
  * Runs while the HTML parses, before React hydrates (which can take seconds on a slow
  * phone). If the video isn't playing 1.5s after navigation, or Save-Data is on, it marks
  * <html> with .hero-early and CSS shows the headline at once. HeroStage honours the flag.
+ * Under prefers-reduced-motion it stops the video and jumps to the lit-bulb last frame.
  */
-const EARLY_REVEAL_SCRIPT = `(function(){var v=document.currentScript.previousElementSibling,d=document.documentElement,c=navigator.connection;function s(){d.classList.add("hero-early")}if(c&&c.saveData)return s();setTimeout(function(){if(!v||v.paused||v.currentTime===0)s()},Math.max(0,${START_TIMEOUT_MS}-performance.now()))})()`;
-/** Safety net if the video starts and then stalls before 5s. */
+const EARLY_REVEAL_SCRIPT = `(function(){${HOLD_LAST_FRAME_JS}var v=document.currentScript.previousElementSibling,d=document.documentElement,c=navigator.connection;function s(){d.classList.add("hero-early")}if(matchMedia("(prefers-reduced-motion: reduce)").matches)return h(v);if(c&&c.saveData)return s();setTimeout(function(){if(!v||v.paused||v.currentTime===0)s()},Math.max(0,${START_TIMEOUT_MS}-performance.now()))})()`;
+/** Safety net if the video starts and then stalls before the cue. */
 const MAX_WAIT_MS = 9000;
 /** Phones in portrait get the 9:16 cut. */
 const MOBILE_MEDIA = "(max-width: 767px) and (orientation: portrait)";
@@ -22,6 +33,8 @@ type HeroStageProps = {
   sources: VideoSource[];
   mobileSources: VideoSource[];
   poster: string;
+  /** Seconds into the clip when the text flies in. */
+  revealAt: number;
   labelledBy: string;
   children: ReactNode;
 };
@@ -29,11 +42,12 @@ type HeroStageProps = {
 type NavigatorWithConnection = Navigator & { connection?: { saveData?: boolean } };
 
 /**
- * Full-bleed hero video plus the headline reveal.
+ * Full-bleed hero video plus the headline reveal. Fills the viewport below the sticky
+ * header (72px bar + 1px rule), so the CTAs aren't pushed under the fold.
  * Server-rendered children mark revealable elements with `data-reveal-line`.
  * Without JS a CSS failsafe (globals.css → .hero-line) keeps them visible.
  */
-export function HeroStage({ sources, mobileSources, poster, labelledBy, children }: HeroStageProps) {
+export function HeroStage({ sources, mobileSources, poster, revealAt, labelledBy, children }: HeroStageProps) {
   const rootRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -56,9 +70,9 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     const timers: number[] = [];
 
     if (reducedMotion) {
-      // No autoplaying motion: hold the first frame/poster. The CSS only hides the
-      // lines under prefers-reduced-motion: no-preference, so the text is already visible.
-      video.pause();
+      // No autoplaying motion: show the lit bulb at once. The CSS only hides the lines
+      // under prefers-reduced-motion: no-preference, so the text is already visible.
+      holdLastFrame(video);
       return () => root.classList.remove("hero-armed");
     }
 
@@ -71,8 +85,10 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     const onPlaying = () => {
       started = true;
     };
+    // timeupdate fires every ~250ms, so the cue can land up to a quarter second late;
+    // "ended" covers a cue at or past the clip's end.
     const onTimeUpdate = () => {
-      if (video.currentTime >= REVEAL_AT_SECONDS) reveal();
+      if (video.currentTime >= revealAt) reveal();
     };
     // Keyboard users tabbing into invisible CTAs get the text immediately.
     const onFocusIn = () => reveal();
@@ -81,6 +97,7 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
       video?.removeEventListener("playing", onPlaying);
       video?.removeEventListener("timeupdate", onTimeUpdate);
       video?.removeEventListener("error", reveal);
+      video?.removeEventListener("ended", reveal);
       root?.removeEventListener("focusin", onFocusIn);
       timers.forEach(window.clearTimeout);
     }
@@ -91,6 +108,7 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
       video.addEventListener("playing", onPlaying);
       video.addEventListener("timeupdate", onTimeUpdate);
       video.addEventListener("error", reveal);
+      video.addEventListener("ended", reveal);
       root.addEventListener("focusin", onFocusIn);
       // Deadlines count from navigation start, not from hydration: on a slow phone React
       // can mount seconds in, and the visitor has been waiting since the page appeared.
@@ -111,13 +129,13 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
       detach();
       root.classList.remove("hero-armed", "hero-revealed");
     };
-  }, []);
+  }, [revealAt]);
 
   return (
     <section
       ref={rootRef}
       aria-labelledby={labelledBy}
-      className="on-dark relative isolate min-h-svh w-full overflow-hidden bg-ink text-paper"
+      className="on-dark relative isolate min-h-[calc(100svh-theme(spacing.header)-1px)] w-full overflow-hidden bg-ink text-paper"
     >
       <video
         ref={videoRef}
@@ -125,7 +143,6 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
         poster={poster}
         autoPlay
         muted
-        loop
         playsInline
         preload="auto"
         aria-hidden="true"
