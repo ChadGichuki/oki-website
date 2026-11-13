@@ -42,7 +42,8 @@ type HeroStageProps = {
 type NavigatorWithConnection = Navigator & { connection?: { saveData?: boolean } };
 
 /**
- * Full-bleed hero video plus the headline reveal.
+ * Full-bleed hero video plus the headline reveal. Fills the viewport below the sticky
+ * header (72px bar + 1px rule), so the CTAs aren't pushed under the fold.
  * Server-rendered children mark revealable elements with `data-reveal-line`.
  * Without JS a CSS failsafe (globals.css → .hero-line) keeps them visible.
  */
@@ -134,7 +135,7 @@ export function HeroStage({ sources, mobileSources, poster, revealAt, labelledBy
     <section
       ref={rootRef}
       aria-labelledby={labelledBy}
-      className="on-dark relative isolate min-h-svh w-full overflow-hidden bg-ink text-paper"
+      className="on-dark relative isolate min-h-[calc(100svh-theme(spacing.header)-1px)] w-full overflow-hidden bg-ink text-paper"
     >
       <video
         ref={videoRef}

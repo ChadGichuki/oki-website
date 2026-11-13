@@ -35,7 +35,10 @@ const config: Config = {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        hero: ["clamp(64px, 11vw, 176px)", { lineHeight: "0.88" }],
+        // Width-led (11vw), but capped by viewport height so the CTAs stay above the fold
+        // on short laptops: (100svh - ~380px of header, subline, CTAs, padding) / ~3.6
+        // (four 0.88 lines). 1440×900 → ~146px, 1366×650 → ~76px.
+        hero: ["clamp(64px, min(11vw, calc((100svh - 380px) * 0.28)), 176px)", { lineHeight: "0.88" }],
         "section-title": ["clamp(48px, 7vw, 96px)", { lineHeight: "0.92" }],
         "body-lg": ["22px", { lineHeight: "1.45" }],
         "body-md": ["18px", { lineHeight: "1.55" }],
@@ -48,6 +51,8 @@ const config: Config = {
         container: "1280px",
       },
       spacing: {
+        /** Sticky site header bar (plus its 1px bottom rule). */
+        header: "72px",
         "section-mobile": "64px",
         section: "120px",
         "btn-md": "44px",

@@ -18,11 +18,8 @@ export function Hero() {
       revealAt={hero.video.revealAt}
       labelledBy="hero-title"
     >
-      <Container className="flex min-h-svh flex-col justify-end pb-16 pt-24 md:pb-24">
-        <p data-reveal-line className="hero-line type-label mb-10 flex items-center gap-2.5 text-label-lg text-muted-dark">
-          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-brand" />
-          {hero.eyebrow}
-        </p>
+      {/* Phones: centred, so the text doesn't sit in the bottom half. md+: anchored low. */}
+      <Container className="flex min-h-[calc(100svh-theme(spacing.header)-1px)] flex-col justify-center pb-12 pt-10 md:justify-end md:pb-16">
         <h1 id="hero-title" className="type-display text-[clamp(40px,13.5vw,64px)] leading-[0.88] tracking-[-0.01em] sm:text-hero">
           {/* Each line rises out of its own mask (globals.css → .hero-mask / .hero-rise). */}
           {hero.headline.map((line) => (

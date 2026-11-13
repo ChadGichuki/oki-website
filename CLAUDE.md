@@ -25,18 +25,20 @@ Orange is for buttons (black text), highlight words in headings and labels on bl
 Never orange body text on paper.
 
 Display: Archivo 900, font-stretch 75%, uppercase, line-height 0.88-0.95.
-Hero clamp(64px, 11vw, 176px). Section titles clamp(48px, 7vw, 96px).
+Hero clamp(64px, min(11vw, calc((100svh - 380px) * 0.28)), 176px): height-capped so CTAs
+stay above the fold. Section titles clamp(48px, 7vw, 96px).
 Body: Inter 400/500, 16-22px. Labels: 12-14px uppercase, tracking 0.12-0.14em.
 Container 1280px, padding 24px (16px mobile). Sections 120px (64px mobile).
 Buttons: pill, min 44px tall, primary 52px.
 
 ## Hero video
-100svh, full-bleed, object-fit cover, autoplay muted playsInline. Plays once, no loop, and
-holds its last frame (the lit bulb) as the permanent background.
+Fills the viewport below the sticky header (100svh - 73px), full-bleed, object-fit cover,
+autoplay muted playsInline. Plays once, no loop, and holds its last frame (the lit bulb) as
+the permanent background.
 16:9 source for desktop, 9:16 for phones. Poster = lit bulb frame (AVIF/WebP < 80 KB).
 Flat rgba(0,0,0,0.45) overlay. No gradient.
 Text flies in at hero.video.revealAt (as the bulb starts shrinking) and lands as it settles:
-headline lines rise out of a mask with a slight tilt, other lines fade up 24px, the highlight
+headline lines rise out of a mask with a slight tilt, subline and CTAs fade up 24px, the highlight
 word flickers on like neon. Show text at once if: the video hasn't started within 1.5s,
 Save-Data is on, or prefers-reduced-motion (which also jumps straight to the last frame).
 

@@ -79,6 +79,7 @@ export interface HeadlineLine {
 }
 
 export interface HeroContent {
+  /** Not shown in the hero; used as the kicker on the social share (OG) image. */
   eyebrow: string;
   /** Each entry is one revealed line of the h1. */
   headline: HeadlineLine[];

@@ -64,12 +64,12 @@
 
 /*
  * Hero choreography, timed to the bulb shrinking (cue = hero.video.revealAt):
- * - eyebrow, subline, CTAs fade up 24px;
+ * - subline and CTAs fade up 24px;
  * - headline lines fly up out of a mask (.hero-mask clips below the line box), tilted
  *   a few degrees and straightening as they land;
  * - the highlight word arrives as an unlit tube and flickers on to orange as the bulb
  *   settles (~1.4s after the cue).
- * Five lines × 120ms stagger + 1.1s ≈ 1.6s: cue 2.9s, last line lands ~4.5s.
+ * Four lines × 120ms stagger + 1.1s ≈ 1.5s: cue 2.9s, last line lands ~4.4s.
  */
 @keyframes hero-ignite {
   0%,
