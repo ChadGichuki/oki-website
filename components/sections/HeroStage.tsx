@@ -71,8 +71,15 @@ export function HeroStage({ sources, mobileSources, poster, labelledBy, children
     const onPlaying = () => {
       started = true;
     };
+    // timeupdate fires only every ~250ms, so a clip barely longer than 5s can loop back to
+    // 0 before ever reporting 5s. Cap the cue just short of the end, and treat a wrap-around
+    // as "reached the end" so the headline never waits on the 9s safety net.
+    let lastTime = 0;
     const onTimeUpdate = () => {
-      if (video.currentTime >= REVEAL_AT_SECONDS) reveal();
+      const t = video.currentTime;
+      const end = Number.isFinite(video.duration) ? video.duration - 0.3 : Infinity;
+      if (t >= Math.min(REVEAL_AT_SECONDS, end) || t < lastTime) reveal();
+      lastTime = t;
     };
     // Keyboard users tabbing into invisible CTAs get the text immediately.
     const onFocusIn = () => reveal();

@@ -20,7 +20,8 @@ import type {
 export type NavLink = Link;
 
 /**
- * PLACEHOLDER media: swap for the real OKI hero cut (lit bulb) before launch.
+ * PREVIEW media: a 5s 16:9 neon-bulb test clip, served locally. Before launch, move the
+ * final cut to the CDN, add a WebM and a 9:16 phone cut (phones crop this one to centre).
  * Budget: first segment < 3 MB, poster AVIF/WebP < 80 KB.
  */
 const hero: HeroContent = {
@@ -34,16 +35,10 @@ const hero: HeroContent = {
   secondaryCta: { label: "See the work", href: "/#work" },
   video: {
     kind: "video",
-    sources: [
-      { src: "/media/hero/hero-16x9.webm", type: "video/webm" },
-      { src: "/media/hero/hero-16x9.mp4", type: "video/mp4" },
-    ],
-    mobileSources: [
-      { src: "/media/hero/hero-9x16.webm", type: "video/webm" },
-      { src: "/media/hero/hero-9x16.mp4", type: "video/mp4" },
-    ],
-    poster: "/media/hero/poster.avif",
-    alt: "A single light bulb flickers on in a dark room.",
+    sources: [{ src: "/media/hero/hero-video.mp4", type: "video/mp4" }],
+    mobileSources: [],
+    poster: "/media/hero/poster.webp",
+    alt: "An orange neon light bulb draws itself line by line on a black background, then glows.",
     width: 1920,
     height: 1080,
   },
