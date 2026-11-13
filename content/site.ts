@@ -83,6 +83,13 @@ const work = {
       slug: "niche",
       eyebrow: "Niche Barbershop & Spa · Westlands",
       title: "The best sales month in its history",
+      media: {
+        kind: "image",
+        src: "/media/work/niche-card.jpg",
+        alt: "Niche Mother's Day poster: a young woman and her mother in spa robes and towel wraps, offering 20% off sauna and steam bath.",
+        width: 1080,
+        height: 1350,
+      },
       placeholder: "[ Niche — influencer campaign still ]",
     },
     {
